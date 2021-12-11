@@ -81,8 +81,6 @@ typedef long double ld;
 // ll dx[] = {1,0,-1,0};
 // ll dy[] = {0,1,0,-1};
 
-const ll mod = 1e9 + 7;
-
 ll cl(ld a){
     if(a>(ll) a){
         return (ll)a+1;
@@ -99,45 +97,36 @@ ll flr(ld a){
     return (ll) a;
 }
 
-
-ll pw(ll n, ll k){
-    if(k == 0) return 1;
-    ll t = pw(n,k/2);
-    ll ans = (t*t)%mod;
-    if(k % 2) return (ans*n)%mod;
-    else return ans;
+ll gcd(ll a, ll b){
+    if(b == 0) return a;
+    else return gcd(b,a%b);
 }
+
+// ll pw(ll n, ll k){
+//     if(k == 0) return 1;
+//     ll t = pw(n,k/2);
+//     ll ans = (t*t)%mod;
+//     if(k % 2) return (ans*n)%mod;
+//     else return ans;
+// }
 
 //code starts here
 
-ll gcd(ll a, ll b){
-    if(b == 0) return a;
-    return gcd(b,a%b);
+// (n^k)%mod
+ll power(ll n, ll k, ll mod){
+    if(k == 1) return n;
+    if(k == 0) return 1;
+    ll x = power(n,k/2,mod);
+    ll ans = (x*x)%mod;
+    if(k%2 == 1) ans = (ans*n)%mod;
+    return ans;
 }
 
 void solve(){
-    ll n; re n;
-    vector<ll> ans;
-    ll res = 1;
-    for(ll i = 1; i<n; i++){
-        if(gcd(n,i) == 1){
-            ans.pb(i);
-            res = (res*i)%n;
-        }
-    }
-    if(res != 1){
-        pr(ans.size()-1);
-        for(auto x: ans){
-            if(x != res){
-                cout<<x<<" ";
-            }
-        }
-        nl;
-        return;
-    }
-    pr(ans.size());
-    for(auto x: ans) cout<<x<<" "; nl;
-
+    ll n,k; re n; re k;
+    ll mod; re mod;
+    ll ans = power(n,k,mod);
+    pr(ans);
 }
 
 int32_t main(){
