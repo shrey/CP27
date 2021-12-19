@@ -1,4 +1,5 @@
 
+
 //Shrey Dubey
 
 
@@ -113,15 +114,25 @@ ll pw(ll n, ll k){
 
 //code starts here
 
-void solve(){
-    ld n,m; re m; re n;
-    ld ans = 0.0;
-    for(ld i = 1; i<=m; i++){
-        // ld k = i/m;
-        // cout<<i<<"()"<<k<<"\n";
-        ans += i*(pow(i/m,n) - pow((i-1)/m,n));
+ll n;
+ll arr[100];
+
+void recur(ll i, vl cur){
+    // cout<<i<<"\n";
+    if(i == n){
+        for(auto x: cur) cout<<x<<" "; nl; // printing the subsequence
+        return;
     }
-    prDouble(ans); nl;
+    vl nw = cur;
+    nw.pb(arr[i]);
+    recur(i+1,cur); // not appending
+    recur(i+1,nw); // appending
+}
+
+void solve(){
+    re n; fo(n) re arr[i];
+    vl cur; // empty subsequence
+    recur(0,cur);
 }
 
 int32_t main(){

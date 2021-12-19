@@ -1,4 +1,5 @@
 
+
 //Shrey Dubey
 
 
@@ -77,8 +78,7 @@ typedef long double ld;
 #define INF 1e18
 #define p 1000000007
 
-// ll dx[] = {1,0,-1,0};
-// ll dy[] = {0,1,0,-1};
+
 
 const ll mod = 1e9 + 7;
 
@@ -113,15 +113,48 @@ ll pw(ll n, ll k){
 
 //code starts here
 
-void solve(){
-    ld n,m; re m; re n;
-    ld ans = 0.0;
-    for(ld i = 1; i<=m; i++){
-        // ld k = i/m;
-        // cout<<i<<"()"<<k<<"\n";
-        ans += i*(pow(i/m,n) - pow((i-1)/m,n));
+ll dx[] = {1,0,-1,0};
+ll dy[] = {0,1,0,-1};
+string dir = "DRUL";
+
+const ll M = 10;
+ll mat[M][M] = {0};
+ll n;
+ll vis[M][M] = {0};
+string ans = "";
+vector<string> res;
+
+ll ok(ll i, ll j){
+    if(i >= 0 && i < n && j >= 0 && j < n && !vis[i][j] && mat[i][j] == 1) return 1;
+    return 0;
+}
+
+void recur(ll i, ll j){
+    if(i == n-1 && j == n-1){
+        res.pb(ans);
     }
-    prDouble(ans); nl;
+    for(ll k = 0; k<4; k++){
+        ll x = i + dx[k], y = j + dy[k];
+        if(ok(x,y)){
+            ans += dir[k];
+            vis[x][y] = 1;
+            recur(x,y);
+            ans.pop_back();
+            vis[x][y] = 0;
+        }
+    }
+}
+
+void solve(){
+    re n;
+    forn(i,n){
+        forn(j,n){
+            re mat[i][j];
+        }
+    }
+    recur(0,0);
+    pr(res.size());
+    for(auto x: res) cout<<x<<" "; nl;
 }
 
 int32_t main(){
@@ -148,3 +181,11 @@ int32_t main(){
 // see suffix and prefix
 //don't be obsessed with binary search
 // try to find repeating pattern in matrices
+
+/*
+4
+1 0 0 0
+1 1 0 1
+1 1 0 0
+0 1 1 1
+*/

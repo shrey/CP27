@@ -1,4 +1,5 @@
 
+
 //Shrey Dubey
 
 
@@ -113,15 +114,31 @@ ll pw(ll n, ll k){
 
 //code starts here
 
-void solve(){
-    ld n,m; re m; re n;
-    ld ans = 0.0;
-    for(ld i = 1; i<=m; i++){
-        // ld k = i/m;
-        // cout<<i<<"()"<<k<<"\n";
-        ans += i*(pow(i/m,n) - pow((i-1)/m,n));
+ll n; ll arr[100];
+
+void recur(vl &cur, vl &vis){
+    if(cur.size() == n){
+        for(auto x: cur) cout<<x<<" "; nl;
+        return;
     }
-    prDouble(ans); nl;
+    for(ll i = 0; i<n; i++){
+        if(!vis[i]){
+            vis[i] = 1;
+            cur.pb(arr[i]);
+            recur(cur,vis);
+            cur.pop_back(); // backtracking case, removes the recently pushed element
+            vis[i] = 0; // marks it non-visited
+        }
+    }
+}
+
+void solve(){
+    re n;
+    fo(n) re arr[i];
+    vl cur;
+    vl vis(n+1,0);
+    nl; nl;
+    recur(cur,vis);
 }
 
 int32_t main(){
