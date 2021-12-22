@@ -86,7 +86,7 @@ void solve(){
         re arr[i];
     }
     bool ls[M] = {false}; // ls[i] is 1 if 1...i is sorted 1,2,3,4,..i, rs[i] is 1 if i,i+1...n is sorted it has
-    bool rs[M] = {false};
+    bool rs[M] = {false}; // rs[i]
     ls[1] = true;
     for(ll i = 2; i<=n; i++){
         if(arr[i] > arr[i-1]) ls[i] = ls[i-1];
