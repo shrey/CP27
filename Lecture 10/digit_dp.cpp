@@ -114,25 +114,43 @@ ll pw(ll n, ll k){
 
 //code starts here
 
-void solve(){
-    ll n; re n;
-    ll dp[n+1][n+1];
+vl a;
+
+ll dp[20][2][170];
+
+ll recur(ll dig, ll tight, ll sum){
+    if(dig == a.size()) return sum;
+    // cout<<dig<<"()"<<tight<<"()"<<sum<<"\n";
+    if(dp[dig][tight][sum] != -1) return dp[dig][tight][sum];
     ll ans = 0;
-    forn(i,n+1){
-        forn(j,n+1) dp[i][j] = 0;
+    ll n = 9;
+    if(tight) n = a[dig];
+    for(ll i = 0; i<=n; i++){
+        ll ntight = (tight && (i == a[dig]));
+        ans = (ans + recur(dig+1,ntight, sum+i));
     }
-    dp[0][0] = 1;
-    for(ll i = 1; i<=n; i++){
-        for(ll j = 1; j<=n; j++){
-            dp[i][j] = j*dp[i-1][j] + dp[i-1][j-1];
-            if(i == n) ans += dp[i][j];
-        }
+    return dp[dig][tight][sum] = ans;
+}
+
+ll f(ll num){
+    a.clear();
+    string s = to_string(num);
+    a.resize((ll)s.length());
+    memset(dp,-1,sizeof(dp));
+    fo(a.size()){
+        a[i] = (s[i]-'0');
     }
-    forn(i,n+1){
-        forn(j,n+1) cout<<dp[i][j]<<" ";
-        nl;
-    }
+    return recur(0,1,0);
+}
+
+
+
+void solve(){
+    ll a,b; re a; re b;
+    // f(a);
+    ll ans = f(b) - f(a-1);
     pr(ans);
+
 }
 
 int32_t main(){
@@ -161,23 +179,4 @@ int32_t main(){
 // try to find repeating pattern in matrices
 
 
-/*
-1 0 0
-0 1 0
-0 1 1
-
-n = 3
-
-1 0 0 0
-0 1 0 0
-0 1 1 0
-0 1 3 1
-
-1,2,3
-{1,2},3
-{1,3},2
-{2,3},1
-
-
-{1}{2}{3}s
-*/
+// 123 1024

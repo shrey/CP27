@@ -114,25 +114,33 @@ ll pw(ll n, ll k){
 
 //code starts here
 
-void solve(){
-    ll n; re n;
-    ll dp[n+1][n+1];
+const ll M = (1<<20)+1;
+// O(2^n * n)
+vl gr[21];
+ll dp[M][21],n,m;
+
+ll recur(ll mask, ll city){
+    mask = mask | (1<<(city-1));
+    if(mask == ((1<<n)-1) && city == n) return 1; // 2^4 - 10000, 2^4-1 - 1111
+    if(city == n || (mask == (1<<n)-1)) return 0;
+    if(dp[mask][city] != -1) return dp[mask][city];
     ll ans = 0;
-    forn(i,n+1){
-        forn(j,n+1) dp[i][j] = 0;
-    }
-    dp[0][0] = 1;
-    for(ll i = 1; i<=n; i++){
-        for(ll j = 1; j<=n; j++){
-            dp[i][j] = j*dp[i-1][j] + dp[i-1][j-1];
-            if(i == n) ans += dp[i][j];
+    for(auto x: gr[city]){
+        if(((mask>>(x-1))&1) == 0){
+            ans = (ans + recur((mask),x))%mod;
         }
     }
-    forn(i,n+1){
-        forn(j,n+1) cout<<dp[i][j]<<" ";
-        nl;
+    return dp[mask][city] = ans;
+}
+
+void solve(){
+    re n; re m;
+    memset(dp,-1,sizeof(dp));
+    fo(m){
+        ll x,y; re x; re y;
+        gr[x].pb(y);
     }
-    pr(ans);
+    pr(recur(0,1));
 }
 
 int32_t main(){
@@ -159,25 +167,3 @@ int32_t main(){
 // see suffix and prefix
 //don't be obsessed with binary search
 // try to find repeating pattern in matrices
-
-
-/*
-1 0 0
-0 1 0
-0 1 1
-
-n = 3
-
-1 0 0 0
-0 1 0 0
-0 1 1 0
-0 1 3 1
-
-1,2,3
-{1,2},3
-{1,3},2
-{2,3},1
-
-
-{1}{2}{3}s
-*/

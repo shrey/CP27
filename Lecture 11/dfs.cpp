@@ -114,25 +114,35 @@ ll pw(ll n, ll k){
 
 //code starts here
 
-void solve(){
-    ll n; re n;
-    ll dp[n+1][n+1];
-    ll ans = 0;
-    forn(i,n+1){
-        forn(j,n+1) dp[i][j] = 0;
-    }
-    dp[0][0] = 1;
-    for(ll i = 1; i<=n; i++){
-        for(ll j = 1; j<=n; j++){
-            dp[i][j] = j*dp[i-1][j] + dp[i-1][j-1];
-            if(i == n) ans += dp[i][j];
+const ll M = 1000;
+vector<ll> gr[M]; // adjacency list -> array of vectors, at each index i, we have a vector that contains the neighbours of i
+vector<ll> vis(M,0);
+
+void add_edge(ll a, ll b){
+    gr[a].push_back(b);
+    gr[b].push_back(a);
+}
+
+void dfs(ll cur){
+    vis[cur] = 1;
+    cout<<cur<<" ";
+    for(auto x: gr[cur]){
+        if(!vis[x]){
+            dfs(x);
         }
     }
-    forn(i,n+1){
-        forn(j,n+1) cout<<dp[i][j]<<" ";
-        nl;
+}
+
+
+void solve(){
+    ll n; ll m;
+    re n; re m;
+    fo(m){
+        ll a,b; re a; re b;
+        add_edge(a,b);
     }
-    pr(ans);
+    dfs(1);
+    nl;
 }
 
 int32_t main(){
@@ -160,24 +170,12 @@ int32_t main(){
 //don't be obsessed with binary search
 // try to find repeating pattern in matrices
 
-
 /*
-1 0 0
-0 1 0
-0 1 1
-
-n = 3
-
-1 0 0 0
-0 1 0 0
-0 1 1 0
-0 1 3 1
-
-1,2,3
-{1,2},3
-{1,3},2
-{2,3},1
-
-
-{1}{2}{3}s
+6 6
+1 2
+1 3
+2 6
+3 4
+3 5
+4 6
 */
