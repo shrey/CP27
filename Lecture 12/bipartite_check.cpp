@@ -115,36 +115,45 @@ ll pw(ll n, ll k){
 //code starts here
 
 const ll M = 1000;
-vector<ll> gr[M]; // adjacency list -> array of vectors, at each index i, we have a vector that contains the neighbours of i
-vector<ll> vis(M,0);
+vl gr[M];
+ll n,m;
+vl col(M);
 
-void add_edge(ll a, ll b){
-    gr[a].push_back(b);
-    gr[b].push_back(a);
-}
-
-void solve(){
-    ll n,m; re n; re m;
-    vector<ll> vis(n+1,0);
-    fo(m){
-        ll a,b; re a; re b;
-        add_edge(a,b);
-    }
+bool bpcheck(){
+    fo(n+1) col[i] = -1;
     queue<ll> q;
     q.push(1);
-    vis[1] = 1;
+    col[1] = 0;
     while(!q.empty()){
         ll cur = q.front();
         q.pop();
-        cout<<cur<<" ";
         for(auto x: gr[cur]){
-            if(!vis[x]){
-                vis[x] = 1;
+            if(col[x] == -1){
+                col[x] = 1-col[cur];
                 q.push(x);
+            }
+            else if(col[x] == col[cur]){
+                return false; // graph is not bipartite
             }
         }
     }
+    return true;
+}
 
+void solve(){
+    re n; re m;
+    fo(m){
+        ll x,y;
+        re x; re y;
+        gr[x].pb(y);
+        gr[y].pb(x);
+    }
+    if(bpcheck()){
+        pr("BIPARTITE");
+    }
+    else{
+        pr("NOT BIPARTITE");
+    }
 }
 
 int32_t main(){
@@ -172,21 +181,19 @@ int32_t main(){
 //don't be obsessed with binary search
 // try to find repeating pattern in matrices
 
-
 /*
-
+5 5
+1 2
+2 3
+3 4
+4 5
+5 1
 
 6 6
 1 2
-1 3
-2 6
+2 3
 3 4
-3 5
-4 6
-
-Levels - shortest distance of the node to the root
-
-a to b
-
-
+4 5
+5 6
+6 1
 */

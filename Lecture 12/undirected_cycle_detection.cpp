@@ -114,44 +114,43 @@ ll pw(ll n, ll k){
 
 //code starts here
 
-const ll M = 1000;
-vector<ll> gr[M]; // adjacency list -> array of vectors, at each index i, we have a vector that contains the neighbours of i
-vector<ll> vis(M,0);
+ll n,m;
+const ll M = 1010;
+vl gr[M];
+vl vis(M,0);
+ll flag = 0;
 
-void add_edge(ll a, ll b){
-    gr[a].push_back(b);
-    gr[b].push_back(a);
+void dfs(ll cur, ll par){
+    vis[cur] = 1;
+    for(auto x: gr[cur]){
+        if(x == par) continue;
+        if(vis[x]){
+            flag = 1;
+            return;
+        }
+        dfs(x,cur);
+    }
 }
 
 void solve(){
-    ll n,m; re n; re m;
-    vector<ll> vis(n+1,0);
+    re n; re m;
     fo(m){
-        ll a,b; re a; re b;
-        add_edge(a,b);
+        ll x,y; re x; re y;
+        gr[x].pb(y); gr[y].pb(x);
     }
-    queue<ll> q;
-    q.push(1);
-    vis[1] = 1;
-    while(!q.empty()){
-        ll cur = q.front();
-        q.pop();
-        cout<<cur<<" ";
-        for(auto x: gr[cur]){
-            if(!vis[x]){
-                vis[x] = 1;
-                q.push(x);
-            }
-        }
+    dfs(1,0);
+    if(flag){
+        pr("CYCLIC");
+    }else{
+        pr("NOT CYCLIC");
     }
-
 }
 
 int32_t main(){
     KOBE;
     ll t;
     t = 1;
-    // re t;
+    re t;
     while(t--) solve();
 }
 
@@ -171,22 +170,3 @@ int32_t main(){
 // see suffix and prefix
 //don't be obsessed with binary search
 // try to find repeating pattern in matrices
-
-
-/*
-
-
-6 6
-1 2
-1 3
-2 6
-3 4
-3 5
-4 6
-
-Levels - shortest distance of the node to the root
-
-a to b
-
-
-*/
