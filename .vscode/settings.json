@@ -3,6 +3,9 @@
         "iostream": "cpp",
         "utility": "cpp",
         "climits": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "algorithm": "cpp",
+        "functional": "cpp",
+        "vector": "cpp"
     }
 }
