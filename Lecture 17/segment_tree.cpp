@@ -117,18 +117,19 @@ ll pw(ll n, ll k){
 const ll M = 2e5+100;
 
 vector<ll> st(4*M+1);
-ll a[M],n;
+ll a[M],n,q;
 
 
 // v -> segment tree index
 // tl -> leftmost index of the range, initially it's 0
 // tr -> rightmost index of the range, initially it's n-1
 void build(ll v, ll tl, ll tr){
+    // cout<<v<<"()"<<tl<<"()"<<tr<<"\n";
     if(tl == tr){
         st[v] = a[tl];
         return;
     }
-    ll tm = (tl + tm)/2;
+    ll tm = (tl + tr)/2;
     build(2*v,tl,tm); // build the left half
     build(2*v+1,tm+1,tr); // build the right half
     st[v] = st[2*v] + st[2*v+1]; // for sum query, we add left half and right half to our range
@@ -167,8 +168,16 @@ void update(ll v, ll tl, ll tr, ll pos, ll change){
 
 
 void solve(){
-    re n;
+    re n; re q;
     fo(n) re a[i];
+    build(1,0,n-1);
+    while(q--){
+        // pr("here");
+        ll l,r; re l; re r;
+        l--; r--;
+        ll ans = query(1,0,n-1,l,r);
+        pr(ans);
+    }
 }
 
 int32_t main(){
